@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen&display=swap" rel="stylesheet">
+
+  <title>Rana|Product Sales Form</title>
+</head>
+<style>
+
+  
+  body{
+    font-family: 'Nunito Sans', sans-serif;
+  }
+  nav a{
+    font-size: 18px;
+    font-weight: bold;
+  }
+  h3{
+    font-family: 'Oxygen', sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 42px;
+    color: #000000;
+  }
+  thead{
+    font-family: 'Oxygen', sans-serif;
+    background-color: #465BBA;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 24px;
+    text-align: center;
+    color: #FFFFFF;
+    
+  }
+  tbody{
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: normal;
+    text-align: center;
+    color: #06050F;
+  }
+  input {
+    height: 40px;
+    width: 300px;
+    border: solid 2px skyblue;
+    border-radius: 6px;
+    color: black;
+    font-size: 16px;
+    font-style: normal;
+    padding-left: 10px;
+    box-shadow: 2px skyblue;
+
+  }
+  label{
+    font-size: 24px;
+
+  }
+
+  #saveButton {
+    font-family: 'Oxygen', sans-serif;
+    height: 40px;
+    width: 300px;
+    font-size: 18px;
+    font-weight: 700px;
+    border-radius: 6px;
+    color: white;
+  }
+
+  #calculateButton {
+    font-family: 'Oxygen', sans-serif;
+    height: 40px;
+    width: 300px;
+    font-size: 18px;
+    font-weight: 700px;
+    border-radius: 6px;
+    color: white;
+  }
+  #seeButton {
+    font-family: 'Oxygen', sans-serif;
+    height: 50px;
+    width: 300px;
+    font-size: 24px;
+    font-weight: 700px;
+    border-radius: 6px;
+    color: white;
+  }
+</style>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+      aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand"  href="{% url 'add_product_sale' %}">{{ request.user.username}}SalesForm</a>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item active">
+          <!-- <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> -->
+        </li>
+      </ul>
+      <a href="{% url 'logout_user' %}" class="btn btn-primary float-right">Logout</a>
+    </div>
+  </nav>
+  <div class="container-fluid my-5">
+    {% block full_content %}
+    {% endblock %}
+  </div>
+  <div class="container my-5">
+    {% block content %}
+    {% endblock %}
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+  <script type="text/javascript">
+
+    $(document).ready(function () {
+      var number_of_carton_sale;
+      var number_of_piece_sale;
+      var total_pruduct_sale ;
+      var amount_of_carton_sale;
+    
+      $("#total_product").hide();
+      $("#sale_amount").hide();
+      $("#saveButton").hide();
+      $("#calculateButton").click(function () {
+        $(this).hide();
+        $("#total_product").show();
+        $("#sale_amount").show();
+        $("#saveButton").show();
+        number_of_carton_sale = $("#id_number_of_carton").val() - $("#id_return_carton").val();
+        console.log(number_of_carton_sale);
+        number_of_piece_sale = $("#id_number_of_piece").val() - $("#id_return_piece").val();
+        console.log(number_of_piece_sale);
+        total_pruduct_sale = number_of_carton_sale + ' carton, ' + number_of_piece_sale + ' piece';
+        console.log(total_pruduct_sale);
+        $(".total-product-sale").val(total_pruduct_sale);
+        amount_of_carton_sale = number_of_carton_sale * $("#id_carton_price_rate").val();
+        console.log(amount_of_carton_sale);
+        amount_of_piece_sale = number_of_piece_sale * $("#id_piece_price_rate").val();
+        console.log(amount_of_piece_sale);
+
+        $(".sale-amount").val(amount_of_carton_sale + amount_of_piece_sale);
+
+      });
+      $("#seeButton").click(function(){
+        $("#table1").show();
+      })
+      
+
+    });
+
+  </script>
+</body>
+
+</html>

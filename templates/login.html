@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}        
+{% block content %}
+
+<form class="form-signin" method="post" action="">
+    <div class="card">
+        <div class="card-body">
+            {% csrf_token %}
+            <!-- {{ login_form }} -->
+            <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+            {% if login_failed %}
+                <div class="alert alert-danger small">Username and password didn't match</div>
+            {% endif %}
+            <label for="inputUsername" class="sr-only">Username</label>
+            <input type="text" id="inputUsername" class="form-control mt-2" placeholder="Username" name="username"
+                   value="{{ form.username.value|default_if_none:"" }}" required autofocus>
+
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" id="inputPassword" class="form-control mt-3" placeholder="Password" name="password"
+                   required>
+            <button class="btn btn-lg btn-success mt-3" type="submit">Go</button>
+            <div class="mt-2">Don't have an account?
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Create an account</button></div>
+        </div>
+        
+    </div>
+</form>
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg"  role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create an Account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="" action="" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_username" class="col-form-label">Username:</label>
+                        <input type="text" class="form-control" id="id_username" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="id_email" class="col-form-label">Email:</label>
+                        <input class="form-control" type="text" id="id_email" name="email"></input>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_password" class="col-form-label">Password:</label>
+                        <input class="form-control" type="password" id="id_password" name="password"></input>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_confirm_password" class="col-form-label">Confirm Password:</label>
+                        <input class="form-control" type="password" id="id_confirm_password" name="confirm_password"></input>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_phone_number" class="col-form-label">Phone Number:</label>
+                        <input class="form-control" type="text" id="id_phone_number" name="phone_number"></input>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Register</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <p class="text-center">If you already have an account, <a href="#">login</a> instead.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

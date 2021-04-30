@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block content %}
+<form class="product-form" action="" method="POST">
+    {% csrf_token %}
+    <h3 class="text-center">Product Sale Report Form</h3>
+    <div class="form-row mt-4">
+        <div class="col-4">
+            <label for="id_name"> Product Name :</label>
+            <input id="id_name" type="text" name="name" placeholder="Enter product name" value="" required>
+        </div>
+
+        <div class="col-4">
+            <label for="id_number_of_carton">Number Of Carton:</label>
+            <input id="id_number_of_carton" type="number" name="number_of_carton" placeholder="Enter number of carton"
+                value="" required>
+        </div>
+        <div class="col-4">
+            <label for="id_number_of_piece">Number of Piece:</label>
+            <input id="id_number_of_piece" type="number" name="number_of_piece" placeholder="Enter number of piece"
+                value="" required>
+        </div>
+
+    </div>
+    <div class="form-row mt-4">
+        <div class="col-4">
+            <label for="id_carton_price_rate">Carton Price Rate:</label>
+            <input id="id_carton_price_rate" type="number" name="carton_price_rate"
+                placeholder="Enter carton price rate" value="" required>
+        </div>
+        <div class="col-4">
+            <label for="id_return_carton">Returned Number Of carton:</label>
+            <input id="id_return_carton" type="number" name="return_carton"
+                placeholder="Enter returned number of carton" value="" required>
+        </div>
+        <div class="col-4">
+            <label for="id_return_piece">Returned Number Of Piece:</label>
+            <input id="id_return_piece" type="number" name="return_piece" placeholder="Enter returned number of piece"
+                value="" required>
+        </div>
+    </div>
+    <div class="form-row mt-4">
+        <div class="col-4">
+            <label for="id_piece_price_rate">Piece Price Rate:</label>
+            <input id="id_piece_price_rate" type="number" name="piece_price_rate" placeholder="Enter piece price rate"
+                value="" required>
+        </div>
+
+        <div class="col-4" id="total_product">
+            <label for="id_total_product_sale">Total Product sale:</label>
+            <input class="total-product-sale" id="id_total_product_sale" type="text" name="total_product_sale" value=""
+                required>
+        </div>
+        <div class="col-4" id="sale_amount">
+            <label for="id_amount_of_sale">Amount of Sale:</label>
+            <input class="sale-amount" id="id_amount_of_sale" type="number" name="amount_of_sale" value="0.00" required>
+        </div>
+
+    </div>
+    <button type="submit" class="btn btn-success mt-4" id="saveButton">Save</button>
+</form>
+<p class="text-success">{{msg}} </p>
+<br>
+<div class="row">
+    <div class="col-8">
+        <button class="btn btn-primary" id="calculateButton">Calculate</button>
+    </div>
+    
+    <div class="col-4">
+        <button type="button" id="seeButton" class="btn btn-info">See per day sale</button>
+    </div>
+</div>
+
+
+
+
+<div class="row mt-4">
+    <div class="col-12" style="display: none;" id="table1" >
+        <h3 class="text-center mt-5  mr-5">Display Total Amount of Sale Per Day  </h3>
+        <table class="table mt-4">
+            <thead class="text-center">
+                <tr>
+                    <th>Date</th>
+                    <th>Total amount per day</th>
+                    
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                {% for product in products %}
+                <tr>
+                    <td><a href="{% url 'product_sale_report_details' product.created_at %}">{{ product.created_at }}</a></td>
+                    <td>{{ product.sum }} </td>
+                    
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}

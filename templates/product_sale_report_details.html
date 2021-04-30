@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block full_content %}
+
+<div class="row">
+    <div class="col-12" id="table1" >
+        <h3 class="text-center mr-5">Product sale informations at {{ date}}</h3>
+        <table class="table table-bordered table-hover mt-4">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Number Of Carton</th>
+                    <th>Number Of Piece</th>
+                    <th>Carton Price Rate</th>
+                    <th>Piece Price Rate</th>
+                    <th>Return Number Of Carton</th>
+                    <th>Return Number Of Piece</th>
+                    <th>Total Product Sale</th>
+                    <th>Amount Of Sale </th>
+
+
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{product.name}}</td>
+                    <td>{{ product.number_of_carton }}</td>
+                    <td>{{ product.number_of_piece }}</td>
+                    <td>{{ product.carton_price_rate }}</td>    
+                    <td>{{ product.piece_price_rate }}</td>    
+                    <td>{{ product.return_carton }}</td>    
+                    <td>{{ product.return_piece }}</td>
+                    <td>{{ product.total_product_sale }}</td>    
+                    <td>{{ product.amount_of_sale }}</td>    
+                        
+
+
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
