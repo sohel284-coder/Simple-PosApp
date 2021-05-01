@@ -1,1 +1,1 @@
-web: gunicorn posdjangoapp.wsgi --log-file -
+web: gunicorn ProductSalesReport.wsgi --log-file -
