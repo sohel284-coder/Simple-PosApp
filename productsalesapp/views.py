@@ -27,12 +27,8 @@ def login_page(request):
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            try:
-                user = User.objects.get(is_staff=True, )
-                login(request, user)
-                return redirect('add_product_sale')
-            except:
-                messages.info(request, 'you are not allowed to login')       
+            login(request, user)
+            return redirect('add_product_sale')         
         else:
             messages.info(request, 'Username or password is incorrect')    
     return render(request, 'login_page.html',   )
@@ -71,7 +67,7 @@ def register_request(request):
 @login_required(login_url='login_page')
 
 def add_product_sale(request):
-    user = User.objects.get(is_staff=True, )
+    user = request.user
     if request.method == 'POST':
         form = ProductSaleForm(request.POST) 
         if form.is_valid():
@@ -99,16 +95,11 @@ def add_product_sale(request):
             return render(request, 'add_product_sale.html', {'msg': 'Information is successfully saved'})
     else:
         form = ProductSaleForm()
-
-    user = User.objects.get(is_staff=True, )
-    products = ProductSale.objects.filter(user=user).values('created_at').order_by('-created_at').annotate(sum=Sum('amount_of_sale'))    
-
+    products = ProductSale.objects.filter(user=request.user).values('created_at').order_by('-created_at').annotate(sum=Sum('amount_of_sale'))    
     return render(request, 'add_product_sale.html', {'form': form, 'products': products })
 
 @login_required(login_url='login_page')
 def product_sale_report_details(request, date):
-    user = User.objects.get(is_staff=True, )
-    # user_products = ProductSale.objects.filter(user=user)
-    products = ProductSale.objects.filter(created_at=date, user=user)
+    products = ProductSale.objects.filter(created_at=date, user=request.user)
     return render(request, 'product_sale_report_details.html', {'products': products, 'date': date, })
 

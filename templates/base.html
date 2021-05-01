@@ -137,9 +137,13 @@
       var number_of_piece_sale;
       var total_pruduct_sale ;
       var amount_of_carton_sale;
+      $("#id_total_product_sale").hide();
+      $("#id_amount_of_sale").hide();
       $("#calculateButton").click(function () {
         $(this).hide();
         $("#saveButton").show();
+        $("#id_total_product_sale").show();
+        $("#id_amount_of_sale").show();
         number_of_carton_sale = $("#id_number_of_carton").val() - $("#id_return_carton").val();
         console.log(number_of_carton_sale);
         number_of_piece_sale = $("#id_number_of_piece").val() - $("#id_return_piece").val();
