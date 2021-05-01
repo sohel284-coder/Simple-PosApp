@@ -15,7 +15,7 @@ SECRET_KEY = 'django-insecure-8puvd^f1ub^d$_p45dh8!v1iy+r1uh$1jz7c0sw6blf1r(5zfa
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['posdjangoapp.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -72,7 +72,7 @@ DATABASES = {
         'NAME': 'posdb',
         'USER': 'posuser',
         'PASSWORD': '1234',
-        'HOST': 'localhost',
+        'HOST': '*',
         'PORT': '5432',
     }
 }
