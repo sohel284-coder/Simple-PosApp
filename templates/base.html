@@ -25,7 +25,7 @@
     font-size: 18px;
     font-weight: bold;
   }
-  h3{
+  h6, h3{
     font-family: 'Oxygen', sans-serif;
     font-size: 28px;
     font-weight: bold;
@@ -50,8 +50,7 @@
     color: #06050F;
   }
   input {
-    height: 40px;
-    width: 300px;
+    height: 50px;
     border: solid 2px skyblue;
     border-radius: 6px;
     color: black;
@@ -68,8 +67,8 @@
 
   #saveButton {
     font-family: 'Oxygen', sans-serif;
-    height: 40px;
-    width: 300px;
+    height: 50px;
+    display: none;
     font-size: 18px;
     font-weight: 700px;
     border-radius: 6px;
@@ -78,8 +77,7 @@
 
   #calculateButton {
     font-family: 'Oxygen', sans-serif;
-    height: 40px;
-    width: 300px;
+    height: 50px;
     font-size: 18px;
     font-weight: 700px;
     border-radius: 6px;
@@ -88,7 +86,6 @@
   #seeButton {
     font-family: 'Oxygen', sans-serif;
     height: 50px;
-    width: 300px;
     font-size: 24px;
     font-weight: 700px;
     border-radius: 6px;
@@ -102,7 +99,7 @@
       aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand"  href="{% url 'add_product_sale' %}">{{ request.user.username}}SalesForm</a>
+    <a class="navbar-brand" style="color:blueviolet;"  href="{% url 'add_product_sale' %}">{{ request.user.username}}SalesForm</a>
 
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -110,7 +107,7 @@
           <!-- <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> -->
         </li>
       </ul>
-      <a href="{% url 'logout_user' %}" class="btn btn-primary float-right">Logout</a>
+      <a href="{% url 'logout_user' %}" class="btn btn-primary btn-lg float-right">Logout</a>
     </div>
   </nav>
   <div class="container-fluid my-5">
@@ -140,14 +137,8 @@
       var number_of_piece_sale;
       var total_pruduct_sale ;
       var amount_of_carton_sale;
-    
-      $("#total_product").hide();
-      $("#sale_amount").hide();
-      $("#saveButton").hide();
       $("#calculateButton").click(function () {
         $(this).hide();
-        $("#total_product").show();
-        $("#sale_amount").show();
         $("#saveButton").show();
         number_of_carton_sale = $("#id_number_of_carton").val() - $("#id_return_carton").val();
         console.log(number_of_carton_sale);
@@ -166,6 +157,7 @@
       });
       $("#seeButton").click(function(){
         $("#table1").show();
+        $(this).hide();
       })
       
 

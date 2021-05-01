@@ -1,6 +1,8 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class ProductSale(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=55, help_text='name of the product')
     number_of_carton = models.PositiveIntegerField(null=True)
     number_of_piece = models.PositiveIntegerField(null=True)

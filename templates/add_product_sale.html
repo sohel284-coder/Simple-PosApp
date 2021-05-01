@@ -2,80 +2,59 @@
 {% block content %}
 <form class="product-form" action="" method="POST">
     {% csrf_token %}
-    <h3 class="text-center">Product Sale Report Form</h3>
-    <div class="form-row mt-4">
-        <div class="col-4">
-            <label for="id_name"> Product Name :</label>
-            <input id="id_name" type="text" name="name" placeholder="Enter product name" value="" required>
+    <h3 class="text-center mb-3" style="color: blueviolet;">Product Sale Report Form</h3>
+    <div class="form-row ml-lg-5">
+        <div class="col-lg-11 col-xs-12">
+            <input class="w-100" id="id_name" type="text" name="name" placeholder="Enter product name" value="" required>
         </div>
-
-        <div class="col-4">
-            <label for="id_number_of_carton">Number Of Carton:</label>
-            <input id="id_number_of_carton" type="number" name="number_of_carton" placeholder="Enter number of carton"
-                value="" required>
-        </div>
-        <div class="col-4">
-            <label for="id_number_of_piece">Number of Piece:</label>
-            <input id="id_number_of_piece" type="number" name="number_of_piece" placeholder="Enter number of piece"
-                value="" required>
-        </div>
-
     </div>
-    <div class="form-row mt-4">
-        <div class="col-4">
-            <label for="id_carton_price_rate">Carton Price Rate:</label>
-            <input id="id_carton_price_rate" type="number" name="carton_price_rate"
+    <div class="form-row mt-4 ml-lg-5">
+        <div class="col-xs-6 col-lg-5">
+            <input class="w-100" id="id_number_of_carton" type="number" name="number_of_carton" placeholder="Enter number of carton"
+                value="" required>
+            <input class="w-100 my-4" id="id_return_carton" type="number" name="return_carton"
+                placeholder="Enter returned number of carton" value="" required>        
+            <input class="w-100" id="id_number_of_piece" type="number" name="number_of_piece" placeholder="Enter number of piece"
+                value="" required>
+            <input class="w-100 my-4" id="id_return_piece" type="number" name="return_piece" placeholder="Enter returned number of piece"
+                value="" required>                      
+        </div>
+        <div class="col-lg-1"></div>
+        <div class="col-xs-6 col-lg-5">
+            <input class="w-100" id="id_carton_price_rate" type="number" name="carton_price_rate"
                 placeholder="Enter carton price rate" value="" required>
-        </div>
-        <div class="col-4">
-            <label for="id_return_carton">Returned Number Of carton:</label>
-            <input id="id_return_carton" type="number" name="return_carton"
-                placeholder="Enter returned number of carton" value="" required>
-        </div>
-        <div class="col-4">
-            <label for="id_return_piece">Returned Number Of Piece:</label>
-            <input id="id_return_piece" type="number" name="return_piece" placeholder="Enter returned number of piece"
+            <input class="w-100 my-4" id="id_piece_price_rate" type="number" name="piece_price_rate" placeholder="Enter piece price rate"
                 value="" required>
-        </div>
-    </div>
-    <div class="form-row mt-4">
-        <div class="col-4">
-            <label for="id_piece_price_rate">Piece Price Rate:</label>
-            <input id="id_piece_price_rate" type="number" name="piece_price_rate" placeholder="Enter piece price rate"
-                value="" required>
-        </div>
-
-        <div class="col-4" id="total_product">
-            <label for="id_total_product_sale">Total Product sale:</label>
-            <input class="total-product-sale" id="id_total_product_sale" type="text" name="total_product_sale" value=""
+            <input class="total-product-sale w-100" id="id_total_product_sale" type="text" name="total_product_sale" value="" placeholder="Total Product Sale" 
                 required>
-        </div>
-        <div class="col-4" id="sale_amount">
-            <label for="id_amount_of_sale">Amount of Sale:</label>
-            <input class="sale-amount" id="id_amount_of_sale" type="number" name="amount_of_sale" value="0.00" required>
+            <input class="sale-amount w-100 my-4" id="id_amount_of_sale" type="number" name="amount_of_sale" value="" placeholder="Total Amount of Sale"  required>                       
         </div>
 
     </div>
-    <button type="submit" class="btn btn-success mt-4" id="saveButton">Save</button>
-</form>
-<p class="text-success">{{msg}} </p>
-<br>
-<div class="row">
-    <div class="col-8">
-        <button class="btn btn-primary" id="calculateButton">Calculate</button>
-    </div>
+    <div class="row ml-3">
+        <div class="col-2"></div>
+        <div class="col-10">
+            <button type="submit" class="btn btn-success w-75 " id="saveButton">Save</button>
+        </div>
+    </div> 
     
-    <div class="col-4">
-        <button type="button" id="seeButton" class="btn btn-info">See per day sale</button>
+</form>
+<p class="text-success ml-5">{{msg}} </p>
+<div class="row ml-3">
+    <div class="col-2"></div>
+    <div class="col-10">
+        <button class="btn btn-primary  w-75 w-sm-100 " id="calculateButton">Calculate</button> 
+    </div>   
+</div>
+<div class="row ml-3 mt-5">
+    <div class="col-2"></div>
+    <div class="col-10 ">
+        <button type="button" id="seeButton" class="btn btn-info w-75">See per day sale</button>
     </div>
 </div>
-
-
-
-
 <div class="row mt-4">
-    <div class="col-12" style="display: none;" id="table1" >
-        <h3 class="text-center mt-5  mr-5">Display Total Amount of Sale Per Day  </h3>
+    <div class="col-lg-12" style="display: none;" id="table1" >
+        <h5 class="text-center mt-5mr-5">Display Total Amount of Sale Per Day  </h5>
         <table class="table mt-4">
             <thead class="text-center">
                 <tr>

@@ -20,14 +20,19 @@ def register_page(request):
             messages.success(request, 'Account has been Created for ' + user)
             return redirect('login_page')
     return render(request, 'register_page.html', {'form':form})
+    
 def login_page(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)
-            return redirect('add_product_sale')
+            try:
+                user = User.objects.get(is_staff=True, )
+                login(request, user)
+                return redirect('add_product_sale')
+            except:
+                messages.info(request, 'you are not allowed to login')       
         else:
             messages.info(request, 'Username or password is incorrect')    
     return render(request, 'login_page.html',   )
@@ -64,8 +69,9 @@ def register_request(request):
     return render(request, 'login.html', {'reg_form': reg_form, 'login_form': login_form})            
 
 @login_required(login_url='login_page')
+
 def add_product_sale(request):
-    products = ProductSale.objects.filter().values('created_at').order_by('-created_at').annotate(sum=Sum('amount_of_sale'))
+    user = User.objects.get(is_staff=True, )
     if request.method == 'POST':
         form = ProductSaleForm(request.POST) 
         if form.is_valid():
@@ -79,6 +85,7 @@ def add_product_sale(request):
             total_product_sale = form.cleaned_data['total_product_sale']
             amount_of_sale = form.cleaned_data['amount_of_sale']
             ProductSale.objects.create(
+                user=user,
                 name=name,
                 number_of_carton=number_of_carton,
                 number_of_piece=number_of_piece,
@@ -93,12 +100,15 @@ def add_product_sale(request):
     else:
         form = ProductSaleForm()
 
+    user = User.objects.get(is_staff=True, )
+    products = ProductSale.objects.filter(user=user).values('created_at').order_by('-created_at').annotate(sum=Sum('amount_of_sale'))    
+
     return render(request, 'add_product_sale.html', {'form': form, 'products': products })
 
 @login_required(login_url='login_page')
 def product_sale_report_details(request, date):
-    products = ProductSale.objects.filter(created_at=date)
+    user = User.objects.get(is_staff=True, )
+    # user_products = ProductSale.objects.filter(user=user)
+    products = ProductSale.objects.filter(created_at=date, user=user)
     return render(request, 'product_sale_report_details.html', {'products': products, 'date': date, })
 
-def index(request):
-    return render(request, 'index.html', )
