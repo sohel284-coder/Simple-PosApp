@@ -1,4 +1,4 @@
-import datetime
+ import datetime
 from django.db.models import Sum, F
 from django.shortcuts import render, HttpResponse, redirect
 from .models import ProductSale, CustomUser
@@ -20,7 +20,7 @@ def register_page(request):
             messages.success(request, 'Account has been Created for ' + user)
             return redirect('login_page')
     return render(request, 'register_page.html', {'form':form})
-    
+
 def login_page(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -28,14 +28,14 @@ def login_page(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('add_product_sale')         
+            return redirect('add_product_sale')
         else:
-            messages.info(request, 'Username or password is incorrect')    
+            messages.info(request, 'Username or password is incorrect')
     return render(request, 'login_page.html',   )
 def logout_user(request):
     logout(request)
-    return redirect('login_page')        
- 
+    return redirect('login_page')
+
 def register_request(request):
     if request.method == 'POST':
         reg_form = CustomRegisterForm(request.POST)
@@ -62,14 +62,14 @@ def register_request(request):
     else:
         login_form = AuthenticationForm()
         reg_form = CustomRegisterForm()
-    return render(request, 'login.html', {'reg_form': reg_form, 'login_form': login_form})            
+    return render(request, 'login.html', {'reg_form': reg_form, 'login_form': login_form})
 
 @login_required(login_url='login_page')
 
 def add_product_sale(request):
     user = request.user
     if request.method == 'POST':
-        form = ProductSaleForm(request.POST) 
+        form = ProductSaleForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
             number_of_carton = form.cleaned_data['number_of_carton']
@@ -95,11 +95,10 @@ def add_product_sale(request):
             return render(request, 'add_product_sale.html', {'msg': 'Information is successfully saved'})
     else:
         form = ProductSaleForm()
-    products = ProductSale.objects.filter(user=request.user).values('created_at').order_by('-created_at').annotate(sum=Sum('amount_of_sale'))    
+    products = ProductSale.objects.filter(user=request.user).values('created_at').order_by('-created_at').annotate(sum=Sum('amount_of_sale'))
     return render(request, 'add_product_sale.html', {'form': form, 'products': products })
 
 @login_required(login_url='login_page')
 def product_sale_report_details(request, date):
     products = ProductSale.objects.filter(created_at=date, user=request.user)
     return render(request, 'product_sale_report_details.html', {'products': products, 'date': date, })
-
